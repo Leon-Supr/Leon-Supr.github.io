@@ -1,0 +1,16 @@
+body{
+    background-color: #bdd7a7;
+}
+
+.container{
+    padding-top: 1%;
+}
+
+#franco{
+    height: 7%;
+    background-color: red;
+}
+
+.card{
+    margin: 7px;
+}
