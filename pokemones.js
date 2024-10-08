@@ -32,13 +32,19 @@ async function renderPokemon() {
         }
 
         wholeCards += `
-        <div class="card">
-            <h2>${thisPokemon.name}</h2>
-            <p>Altura: ${thisPokemon.height} ft</p> 
-            <p>Tipo: ${thisPokemon.types.
-                // el .map, es como un foreach, que modifica el arreglo original, y hace push de cada elemento modificado a una copia del arreglo
-                // al resultado del .map se le aplica el .join, que separá cada arreglo con un ,
-                map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ")}</p>
+        <div class="card" style="width: 18rem">
+            <img class="card-img-top" src="${thisPokemon.sprites.other.home.front_default}" alt="Card image cap" />
+            <div class="card-body">
+                <h5 class="card-title">${thisPokemon.name.toUpperCase()}</h5>
+                <p>Tipo: ${thisPokemon.types.
+                                                // el .map, es como un foreach, que modifica el arreglo original, y hace push de cada elemento modificado a una copia del arreglo
+                                                // al resultado del .map se le aplica el .join, que separá cada arreglo con un ,
+                        map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ")}</p>
+            </div>
+        
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Ver Pokémon
+            </button>
         </div>
       `
     }
