@@ -12,7 +12,6 @@ async function renderPokemon() {
     data = await getNumPokemones();
     const URL = "https://pokeapi.co/api/v2/pokemon";
     let wholeCards = "";
-    main.innerHTML = '';
 
 
     for (let i = 1; i < data; i++) {
@@ -20,16 +19,16 @@ async function renderPokemon() {
         const thisPokemon = await (await fetch(pokemonURL)).json();
         console.log(thisPokemon);
 
-        const card = document.createElement('div')
-        card.classList = 'card';
-        card.innerHTML = (`
-        <h2>${thisPokemon.name}</h2>
-      `)
-        main.appendChild(card);
-        
-
+        wholeCards += `
+        <div class="card">
+            <h2>${thisPokemon.name}</h2>
+            <p>${thisPokemon.height}</p>
+        </div>
+      `
     }
-    
+
+    main.innerHTML = wholeCards;
+
 }
 
 renderPokemon();
