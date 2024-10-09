@@ -20,15 +20,15 @@ async function renderPokemon() {
 
     for (let i = 1; i < data; i++) {
         const pokemonURL = `${URL}/${i}/`;
-        /** @type {Pokemon} */
         const thisPokemon = await (await fetch(pokemonURL)).json();
-        /** @type {string[]} */
+        const thisPokemonSpecies = await (await fetch(`${URL}-species/${i}`)).json();
+        const thisPokemonStats = await(await fetch(''));
+        
         const arrayTipos = [];
 
-        //console.log(thisPokemon);
         for (let i = 0; i < thisPokemon.types.length; i++) {
             arrayTipos.push(thisPokemon.types[i].type.name);
-            console.log(`${thisPokemon.name} es de tipo/s: ${arrayTipos}`);
+            //console.log(`${thisPokemon.name} es de tipo/s: ${arrayTipos}`);
         }
 
         //Variables del Pokemon
@@ -37,6 +37,8 @@ async function renderPokemon() {
         const tiposSpan = thisPokemon.types.map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
         const altura = thisPokemon.height * 10;
         const peso = thisPokemon.weight / 10;
+        const descripcion = thisPokemonSpecies.flavor_text_entries[26].flavor_text;
+        
         
         const idModal = `${thisPokemon.name}Modal`;
         const idModalLabel = `${thisPokemon.name}ModalLabel`;
@@ -63,12 +65,16 @@ async function renderPokemon() {
                         <h1 class="modal-title fs-5" id="${idModalLabel}">${nombre.toUpperCase()}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body d-flex">
                         <img src="${imagen_frente}" class="img-thumbnail" alt="imagen de pokemon">
-                        <p class="tipo">Tipo: ${tiposSpan}</p>
-                        <p class="altura">Altura: ${altura} cm</p>
-                        <p class="peso">Peso: ${peso} Kg</p>
-                        <p class="evoluciones"></p>
+                        <div>
+                            <p class="tipo">Tipo: ${tiposSpan}</p>
+                            <p class="altura">Altura: ${altura} cm</p>
+                            <p class="peso">Peso: ${peso} Kg</p>
+                            <p class="descripcion">${descripcion}</p>
+                            <p class="hp"><p>
+                            <p class="evoluciones"></p>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
