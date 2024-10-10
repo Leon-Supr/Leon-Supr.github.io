@@ -7,12 +7,11 @@
     <link rel="icon" type="image/x-icon"
         href="https://cdn.iconscout.com/icon/free/png-256/free-pokemon-pokeball-pikachu-thunder-electric-shock-32217.png?f=webp&w=128">
     <title>Pokedex</title>
-    <!-- <script src="./app.js" defer></script> -->
-    <script src="pokemones.js" defer></script>
+    <script src="app.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-        
+    <script src="/node_modules/plotly.js-dist/plotly.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -32,6 +31,17 @@
 
     <div class="container-fluid d-flex flex-wrap justify-content-center" id="main">
     </div>
+
+    
+    <div id="tester" style="width:600px;height:250px;"></div>
+    <script>
+        TESTER = document.getElementById('tester');
+        Plotly.newPlot( TESTER, [{
+        x: [1, 2, 3, 4, 5],
+        y: [1, 2, 4, 8, 16] }], {
+        margin: { t: 0 } } );
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

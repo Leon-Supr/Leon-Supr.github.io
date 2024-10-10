@@ -1,11 +1,6 @@
 const main = document.querySelector("#main");
 main.innerHTML = `<p>Nada aún</p>`;
 
-/**
- * @typedef Pokemon
- * @property weight {number}
- */
-
 async function getNumPokemones() {
     const data = await (
         await fetch("https://pokeapi.co/api/v2/pokemon/") //Si le agrego /n/ al final, es otro pokemon
@@ -22,7 +17,10 @@ async function renderPokemon() {
         const pokemonURL = `${URL}/${i}/`;
         const thisPokemon = await (await fetch(pokemonURL)).json();
         const thisPokemonSpecies = await (await fetch(`${URL}-species/${i}`)).json();
-        const thisPokemonStats = await (await fetch(''));
+
+        console.log(thisPokemon);
+        console.log(thisPokemonSpecies);
+        
 
         const arrayTipos = [];
         const arrayMovimientos = [];
@@ -94,7 +92,6 @@ async function renderPokemon() {
         </div>
       `
     }
-
     main.innerHTML = wholeCards;
 }
 renderPokemon();
