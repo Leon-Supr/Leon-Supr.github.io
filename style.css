@@ -1,7 +1,18 @@
 #main{
     background-color: #A3D4E9;
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; */
+
 }
 
-.modal-body{
-    font-weight: bold;
+.img-modal{
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+
+.grass{
+    color: black;
+    background-color: #9BCC50;
 }

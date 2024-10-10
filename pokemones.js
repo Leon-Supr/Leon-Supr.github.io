@@ -18,18 +18,23 @@ async function renderPokemon() {
     const URL = "https://pokeapi.co/api/v2/pokemon";
     let wholeCards = "";
 
-    for (let i = 1; i < data; i++) {
+    for (let i = 1; i < data+1; i++) {
         const pokemonURL = `${URL}/${i}/`;
         const thisPokemon = await (await fetch(pokemonURL)).json();
         const thisPokemonSpecies = await (await fetch(`${URL}-species/${i}`)).json();
-        const thisPokemonStats = await(await fetch(''));
-        
+        const thisPokemonStats = await (await fetch(''));
+
         const arrayTipos = [];
+        const arrayMovimientos = [];
 
         for (let i = 0; i < thisPokemon.types.length; i++) {
             arrayTipos.push(thisPokemon.types[i].type.name);
             //console.log(`${thisPokemon.name} es de tipo/s: ${arrayTipos}`);
         }
+
+        console.log(thisPokemon);
+        //console.log(thisPokemon.moves[0].name);
+        //for(let i = 0; i< thisPokemon.moves[i].name)
 
         //Variables del Pokemon
         const nombre = thisPokemon.name;
@@ -37,14 +42,16 @@ async function renderPokemon() {
         const tiposSpan = thisPokemon.types.map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
         const altura = thisPokemon.height * 10;
         const peso = thisPokemon.weight / 10;
-        const descripcion = thisPokemonSpecies.flavor_text_entries[26].flavor_text;
-        
-        
+        //const descripcion = thisPokemonSpecies.flavor_text_entries[26].flavor_text;
+        const descripcion = thisPokemonSpecies.flavor_text_entries.find(desc => desc.language.name === 'es')?.flavor_text; //Una sola descripción, la primera que encuentre
+        //const descripcion = thisPokemonSpecies.flavor_text_entries.filter(desc => desc.language.name === 'es').map(desc => desc.flavor_text).join('<br>'); // Todas las que encuentre (se repiten :/)
+
+
         const idModal = `${thisPokemon.name}Modal`;
         const idModalLabel = `${thisPokemon.name}ModalLabel`;
         wholeCards += `
-        <div class="card" style="width: 18rem">
-            <img class="card-img-top" src="${imagen_frente}" alt="Card image cap" />
+        <div class="card m-2" style="width: 16rem">
+            <img class="card-img-top" src="${imagen_frente}" alt="Card image cap" height="254px"/>
             <div class="card-body">
                 <h5 class="card-title">${nombre.toUpperCase()}</h5>
                 <p>Tipo: ${thisPokemon.types.
@@ -53,7 +60,7 @@ async function renderPokemon() {
                 map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ")}</p>
             </div>
         
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${idModal}">
+            <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#${idModal}">
             Ver Pokémon
             </button>
         </div>
@@ -61,20 +68,21 @@ async function renderPokemon() {
         <div class="modal fade" id="${idModal}" tabindex="-1" aria-labelledby="${idModalLabel}" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="${idModalLabel}">${nombre.toUpperCase()}</h1>
+                    <div class="modal-header d-flex justify-content-evenly">
+                        <h1 class="modal-title fs-4" id="${idModalLabel}">${nombre.toUpperCase()}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body d-flex">
-                        <img src="${imagen_frente}" class="img-thumbnail" alt="imagen de pokemon">
-                        <div>
-                            <p class="tipo">Tipo: ${tiposSpan}</p>
-                            <p class="altura">Altura: ${altura} cm</p>
-                            <p class="peso">Peso: ${peso} Kg</p>
-                            <p class="descripcion">${descripcion}</p>
-                            <p class="hp"><p>
-                            <p class="evoluciones"></p>
+                    <div class="modal-body d-flex flex-column">
+                        <div class="d-flex flex-row">
+                            <img src="${imagen_frente}" class="img-thumbnail border-0 img-modal" alt="imagen de pokemon">
+                            <div class="container pd-2">
+                                <p class="tipo"><b>Tipo:</b> ${tiposSpan}.</p>
+                                <p class="altura"><b>Altura:</b> ${altura} cm.</p>
+                                <p class="peso"><b>Peso:</b> ${peso} Kg.</p>
+                                <p class="descripcion">${descripcion}</p>
+                            </div>
                         </div>
+                        <h1 class="fs-5">Stats</h1>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
