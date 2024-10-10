@@ -16,3 +16,33 @@
     color: black;
     background-color: #9BCC50;
 }
+
+.poison{
+    color: white;
+    background-color: #B97FC9;
+}
+
+.fire{
+    color: white;
+    background-color: #F47923;
+}
+
+.water{
+    color: white;
+    background-color: #4592C4;
+}
+
+.bug{
+    color: white;
+    background-color: #6D983C;
+}
+
+.flying{
+    color: black;
+    background-color: #d8d8d8;
+}
+
+.normal{
+    color: black;
+    background-color: #A4ACAF;
+}
