@@ -8,19 +8,29 @@ async function getNumPokemones() {
     return data.results.length;
 }
 
+// function setStats() { //Ve cuántas etiquetas .tester (para los stats) se crearon
+//     for (let i = 1; i < document.querySelectorAll('.tester').length+1; i++) {
+        
+//         array.forEach(document.querySelectorAll('.tester') => {
+            
+//         });
+//         console.log(`Número ${i}`);
+//     }
+// }
+
 async function renderPokemon() {
     const data = await getNumPokemones();
     const URL = "https://pokeapi.co/api/v2/pokemon";
     let wholeCards = "";
 
-    for (let i = 1; i < data+1; i++) {
+    for (let i = 1; i < data + 1; i++) {
         const pokemonURL = `${URL}/${i}/`;
         const thisPokemon = await (await fetch(pokemonURL)).json();
         const thisPokemonSpecies = await (await fetch(`${URL}-species/${i}`)).json();
 
         console.log(thisPokemon);
-        console.log(thisPokemonSpecies);
-        
+        //console.log(thisPokemonSpecies);
+
 
         const arrayTipos = [];
         const arrayMovimientos = [];
@@ -29,10 +39,6 @@ async function renderPokemon() {
             arrayTipos.push(thisPokemon.types[i].type.name);
             //console.log(`${thisPokemon.name} es de tipo/s: ${arrayTipos}`);
         }
-
-        console.log(thisPokemon);
-        //console.log(thisPokemon.moves[0].name);
-        //for(let i = 0; i< thisPokemon.moves[i].name)
 
         //Variables del Pokemon
         const nombre = thisPokemon.name;
@@ -81,7 +87,9 @@ async function renderPokemon() {
                             </div>
                         </div>
                         <h1 class="fs-5">Stats</h1>
-                    </div>
+                        <div class="tester" id="${nombre}" style="width:600px;height:250px;"></div>
+                            
+                        </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Cerrar
@@ -92,10 +100,46 @@ async function renderPokemon() {
         </div>
       `
     }
-    main.innerHTML = wholeCards;
+
+    main.innerHTML = wholeCards; //Inserta todo el string de Html con todas las cartas al main
+
+    const nodos = document.querySelectorAll('.tester');
+    nodos.forEach(async nodo =>{
+        const id = nodo.id;
+        const pokemonURL = `${URL}/${id}/`;
+        const thisPokemon = await (await fetch(pokemonURL)).json();
+
+        hp = thisPokemon.stats[0].base_stat;
+        attack = thisPokemon.stats[1].base_stat;
+        defense = thisPokemon.stats[2].base_stat;
+        specialAttack = thisPokemon.stats[3].base_stat;
+        specialDefense = thisPokemon.stats[4].base_stat;
+        speed = thisPokemon.stats[5].base_stat;
+
+        TESTER = nodo;
+        Plotly.newPlot( TESTER, [{
+        x: ["HP", "Ataque", "Defensa", "Ataque especial", "Defensa especial", "Velocidad"],
+        y: [hp, attack, defense, specialAttack, specialDefense, speed] }], {
+        margin: { t: 0 } } );
+    })
+
+    
+    
+    // setStats();
+    // TESTER = document.querySelectorAll(`.tester`);
+    //   Plotly.newPlot( TESTER, [{
+    //   x: [1, 2, 3, 4, 5],
+    //   y: [1, 2, 4, 8, 19] }], {
+    //   margin: { t: 0 } } );
 }
 renderPokemon();
+
+// async function setStats(nodos){
+
+// }
 
 console.log("-------------------------------------");
 console.log('Toda la API mide:');
 getNumPokemones().then(response => console.log(response));
+
+
