@@ -1,5 +1,6 @@
 const main = document.querySelector("#main");
-const botonBuscar = document.querySelector('#btn-buscar')
+const botonBuscar = document.querySelector('#btn-buscar');
+const navbarBrand = document.querySelector('.navbar-brand');
 main.innerHTML = `<p>Nada aún</p>`;
 
 async function getNumPokemones() {
@@ -30,7 +31,7 @@ async function renderPokemons() {
         //Variables del Pokemon
         const nombre = thisPokemon.name;
         const imagen_frente = thisPokemon.sprites.other.home.front_default;
-        const tiposSpan = thisPokemon.types.map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
+        const tiposSpan = thisPokemon.types.map(tipo => `<span class="tipo ${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
         const altura = thisPokemon.height * 10;
         const peso = thisPokemon.weight / 10;
         //const descripcion = thisPokemonSpecies.flavor_text_entries[26].flavor_text;
@@ -48,7 +49,7 @@ async function renderPokemons() {
                 <p>Tipo: ${thisPokemon.types.
                 // el .map, es como un foreach, que modifica el arreglo original, y hace push de cada elemento modificado a una copia del arreglo
                 // al resultado del .map se le aplica el .join, que separá cada arreglo con un ,
-                map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ")}</p>
+                map(tipo => `<span class="${tipo.type.name} tipo">${tipo.type.name}</span>`).join(", ")}</p>
             </div>
         
             <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#${idModal}">
@@ -73,8 +74,10 @@ async function renderPokemons() {
                                 <p class="descripcion">${descripcion}</p>
                             </div>
                         </div>
-                            <h1 class="fs-5">Stats</h1>
-                            <div class="tester" id="${nombre}" style="width:600px;height:250px;"></div>
+                    <div class="d-flex flex-column align-items-center">
+                        <h1 class="fs-5">Stats de ${nombre}</h1>
+                        <div class="tester d-flex" id="${nombre}" style="width:600px;height:250px;"></div>
+                    </div>    
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -103,7 +106,6 @@ async function renderPokemons() {
         speed = thisPokemon.stats[5].base_stat;
 
         TESTER = nodo;
-        var config = { responsive: true }
         Plotly.newPlot(TESTER, [{
             x: ["HP", "Ataque", "Defensa", "Ataque especial", "Defensa especial", "Velocidad"],
             y: [hp, attack, defense, specialAttack, specialDefense, speed],
@@ -120,15 +122,10 @@ console.log('Toda la API mide:');
 getNumPokemones().then(response => console.log(response));
 
 
-
-
-
 botonBuscar.addEventListener('click', async (e) => {
     e.preventDefault();
     const input = document.querySelector('#search-input').value;
     main.innerHTML = '';
-
-    console.log(input)
 
     const URL = "https://pokeapi.co/api/v2/pokemon";
     const PokemonURL = `${URL}/${input}`;
@@ -144,7 +141,7 @@ botonBuscar.addEventListener('click', async (e) => {
 
     const nombre = thisPokemon.name;
     const imagen_frente = thisPokemon.sprites.other.home.front_default;
-    const tiposSpan = thisPokemon.types.map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
+    const tiposSpan = thisPokemon.types.map(tipo => `<span class="tipo ${tipo.type.name}">${tipo.type.name}</span>`).join(", ");
     const altura = thisPokemon.height * 10;
     const peso = thisPokemon.weight / 10;
     const descripcion = thisPokemonSpecies.flavor_text_entries.find(desc => desc.language.name === 'es')?.flavor_text; //Una sola descripción, la primera que encuentre
@@ -159,7 +156,7 @@ botonBuscar.addEventListener('click', async (e) => {
                 <p>Tipo: ${thisPokemon.types.
             // el .map, es como un foreach, que modifica el arreglo original, y hace push de cada elemento modificado a una copia del arreglo
             // al resultado del .map se le aplica el .join, que separá cada arreglo con un ,
-            map(tipo => `<span class="${tipo.type.name}">${tipo.type.name}</span>`).join(", ")}</p>
+            map(tipo => `<span class="${tipo.type.name} tipo">${tipo.type.name}</span>`).join(", ")}</p>
             </div>
         
             <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#${idModal}">
@@ -188,7 +185,7 @@ botonBuscar.addEventListener('click', async (e) => {
                             <h1 class="fs-5">Stats de ${nombre}</h1>
                             <div class="tester d-flex" id="${nombre}" style="width:600px;height:250px;"></div>
                         </div>                            
-                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Cerrar
@@ -216,4 +213,10 @@ botonBuscar.addEventListener('click', async (e) => {
     }], {
         margin: { t: 0 }
     });
+})
+
+navbarBrand.addEventListener('click', (e)=>{
+    e.preventDefault();
+    document.querySelector('#search-input').value = '';
+    renderPokemons();
 })

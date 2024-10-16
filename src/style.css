@@ -1,12 +1,16 @@
-
-#main{
-    background-color: #A3D4E9;
+#main-container{
+    background-color: #A3D4E9
 }
 
 .img-modal{
-    width: 200px;
+    width: 12rem;
     height: auto;
     object-fit: contain;
+}
+
+.tipo{
+    padding: 0.2rem;
+    border-radius: .8rem;
 }
 
 .grass{
@@ -42,4 +46,54 @@
 .normal{
     color: black;
     background-color: #A4ACAF;
+}
+
+.electric{
+    color: black;
+    background-color: #EED535;
+}
+
+.steel{
+    color: black;
+    background-color: #9EB7B8;
+}
+
+.psychic{
+    color: white;
+    background-color: #F266B8;
+}
+
+.fighting{
+    color: white;
+    background-color: #D56723;
+}
+
+.dark{
+    color: white;
+    background-color: #707070;
+}
+
+.ice{
+    color: black;
+    background-color: #51C4E7;
+}
+
+.ground{
+    color: white;
+    background-color: #AB9842;
+}
+
+.fairy{
+    color: black;
+    background-color: #FDB9E9;
+}
+
+.ghost{
+    color: white;
+    background-color: #7B62A3;
+}
+
+.dragon{
+    color: white;
+    background-color: #F16E57;
 }
