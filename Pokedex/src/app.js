@@ -124,8 +124,9 @@ getNumPokemones().then(response => console.log(response));
 
 botonBuscar.addEventListener('click', async (e) => {
     e.preventDefault();
-    const input = document.querySelector('#search-input').value;
-    main.innerHTML = '';
+    const input = document.querySelector('#search-input').value.toLowerCase();
+    console.log(input);
+    
 
     const URL = "https://pokeapi.co/api/v2/pokemon";
     const PokemonURL = `${URL}/${input}`;
